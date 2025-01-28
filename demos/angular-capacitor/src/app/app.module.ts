@@ -19,7 +19,12 @@ import { CoreModule } from './core/core.module';
     CoreModule
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (authService: AuthService) => authService.init(),
+      deps: [AuthService]
+    },
   ],
   bootstrap: [AppComponent]
 })
