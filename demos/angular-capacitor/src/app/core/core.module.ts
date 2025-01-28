@@ -24,7 +24,8 @@ import { HttpClient } from '@angular/common/http';
     },
     {
       provide: Browser,
-      useClass: CapacitorBrowser
+      useFactory: (platform: Platform): Browser => platform.is("hybrid") ? new CapacitorBrowser() : new DefaultBrowser(),
+      deps: [Platform]
     },
     {
       provide: AuthService,
