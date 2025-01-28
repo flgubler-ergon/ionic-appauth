@@ -342,6 +342,10 @@ export class AuthService implements IAuthService {
   }
 
   public async signIn(authExtras?: StringMap, state?: string) {
+    if (!this._initComplete.value) {
+      throw new Error('Trying to sign in before AuthService is initialized!');
+    }
+    
     await this.performAuthorizationRequest(authExtras, state).catch((response) => {
       this.notifyActionListers(AuthActionBuilder.SignInFailed(response));
     });
